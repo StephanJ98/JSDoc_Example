@@ -36,3 +36,14 @@ export async function createTodos({ title, completed = false }) {
     await writeFile(path, JSON.stringify(todos))
     return todo
 }
+
+/**
+ * Removes a taks on the local storage and saves the changes on the local storage.
+ * @param {number} id - ID of the task to remove
+ * 
+ * @function
+ */
+export async function removeTodos(id) {
+    const todos = await findTodos()
+    await writeFile(path, JSON.stringify(todos.filter(todo => todo.id !== id)))
+}

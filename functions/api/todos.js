@@ -1,4 +1,4 @@
-import { createTodos, findTodos } from "../todos_storage.js"
+import { createTodos, findTodos, removeTodos } from "../todos_storage.js"
 import { json } from 'node:stream/consumers'
 
 
@@ -25,4 +25,17 @@ export const find = async () => {
 export const create = async (req) => {
     const newTodo = await createTodos(await json(req))
     return newTodo
+}
+
+/**
+ * 
+ * @param {Response} res - Response object
+ * @param {string} url - URL of the request
+ * 
+ * @function
+ */
+export const remove = async (res, url) => {
+    const id = parseInt(url.searchParams.get('id'), 10)
+    await removeTodos(id)
+    res.writeHead(204)
 }
